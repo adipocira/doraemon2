@@ -1,0 +1,16 @@
+name: Doraemon 2
+platform: n64
+build_system: make
+versions:
+  - name: doraemon2
+    fullname: doraemon2
+    sha1: 4b187360e1999556662c28b65dd179432ec61f9a
+    paths:
+      target: "baserom.z64"
+      build_dir: "build"
+      map: "doraemon2.map"
+      compiled_target: "build/doraemon2.z64"
+      elf: "build/doraemon2.z64.elf"
+      expected_dir: "expected/"
+      asm: "asm"
+      nonmatchings: "asm/nonmatchings"

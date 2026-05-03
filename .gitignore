@@ -1,0 +1,26 @@
+#dirs
+
+build/*
+__pycache__/
+asm/
+assets/
+expected/
+
+.venv/*
+
+# files
+*.z64
+*.o
+*.ld
+*.csv
+*.d
+
+.vscode/*
+!.vscode/c_cpp_properties.json
+
+ctx.c
+#permuter files
+src/c.c 
+src/asm.s
+
+tools/ido
