@@ -23,4 +23,4 @@ ctx.c
 src/c.c 
 src/asm.s
 
-tools/ido
+tools/gcc_kmc

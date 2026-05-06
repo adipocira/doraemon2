@@ -1,0 +1,28 @@
+//
+
+// vi.s
+osTvType = 0x80000300;
+
+
+// 43F0.c
+
+func_80029B30 = 0x80029B30;
+srand = 0x80029C30;
+rand = 0x80029C3C;
+
+next = 0x800F0A90;
+
+//
+
+// getcount.s
+
+osGetCount = 0x800BE2B0;
+
+//
+
+// recvmesg.c
+
+osRecvMesg = 0x800BE6B0;
+
+//
+

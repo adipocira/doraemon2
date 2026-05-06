@@ -22,7 +22,7 @@ KMC_DIR         := gcc_kmc/$(DETECTED_OS)/2.7.2
 KMC_GCC         := $(KMC_DIR)/gcc
 KMC_BINUTILS    := $(KMC_DIR)/as
 
-all: $(KMC_GCC)
+all: $(KMC_GCC) $(KMC_BINUTILS)
 
 clean:
 	@$(RM) -rf $(KMC_DIR)

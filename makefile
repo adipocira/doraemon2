@@ -28,6 +28,7 @@ else
   endif
 endif
 
+
 NO_COL  := \033[0m
 RED     := \033[0;31m
 RED2    := \033[1;31m
@@ -50,7 +51,10 @@ else
   $(error Unable to detect a suitable MIPS toolchain installed.)
 endif
 
-CC          := tools/gcc_kmc/$(DETECTED_OS)/2.7.2/gcc
+
+COMPILER_DIR = tools/gcc_kmc/$(DETECTED_OS)/2.7.2/
+
+CC := COMPILER_PATH=$(COMPILER_DIR) $(COMPILER_DIR)gcc
 
 AS              := $(MIPS_BINUTILS_PREFIX)as
 LD              := $(MIPS_BINUTILS_PREFIX)ld
@@ -67,11 +71,6 @@ SRC_DIRS := $(shell find src -type d)
 
 ICONV           := iconv
 ICONV_FLAGS     := --from-code=UTF-8 --to-code=SHIFT-JIS
-
-ASM_PROC_DIR	:= tools/asm_processor
-ASM_PROC		:= python3 $(ASM_PROC_DIR)/build.py
-
-ASM_PROC_FLAGS  := --input-enc=utf-8 --output-enc=shift-jis
 
 OBJDUMP_FLAGS := -d -r -z -Mreg-names=32
 
@@ -91,11 +90,11 @@ INCLUDE_CFLAGS = -I. -I include -I lib/libultra -I lib/libulra/libc
 
 OPT_FLAGS 	:= -mips2 -O1
 C_FLAGS		:= -o32
-AS_FLAGS	:= -march=vr4300 -mabi=32 -G0 -no-pad-sections -I include
+AS_FLAGS	:= -I include -mips3 -mabi=32
 
 DEFINES := -D_LANGUAGE_C -D_FINALROM -DNDEBUG -DTARGET_N64 -D_MIPS_SZLONG=32
 
-C_FLAGS += -nostdinc -fno-PIC -G 0 -mgp32 -mfp32 -Wa,--force-n64align
+C_FLAGS += -nostdinc -fno-PIC -G 0 -mgp32 -mfp32 -Wa,--force-n64align -fno-asm -fno-common
 C_FLAGS += $(DEFINES) $(INCLUDE_CFLAGS)
 
 LD_FLAGS   = -T $(LDSCRIPT) -T undefined_funcs_auto.txt  -T undefined_syms_auto.txt
@@ -112,6 +111,7 @@ all: verify
 
 verify: $(ROM)
 	@printf "$(CYAN)%s\n$(NO_COL)" $(shell md5sum -c $(BASENAME).z64.md5)
+
 
 tools:
 	@make -C tools
@@ -132,22 +132,13 @@ postsplitdirs:
 
 setup: dirs split postsplitdirs
 
-# cc & asm-processor
-build/src/%.o: CC := $(ASM_PROC) $(ASM_PROC_FLAGS) $(CC) -- $(AS) $(AS_FLAGS) --
-
-
-$(BUILD_DIR)/src/libultra/libc/%.o: src/libultra/libc/%.c
-	@$(CC) -c $(C_FLAGS) $(OPT_FLAGS) -o $@ $<
-	@printf "[$(GREEN)  ido5.3  $(NO_COL)]  $<\n"
-	@$(PYTHON) tools/set_o32abi_bit.py $@
-	@$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.s)
-
 $(ROM).elf: $(BASENAME).ld $(O_FILES)
 	@$(LD) $(LD_FLAGS) -o $@
 
 $(BUILD_DIR)/%.o: %.c
-	@$(CC) -c $(C_FLAGS) $(OPT_FLAGS) -o $@ $<
-	@printf "[$(GREEN)  ido5.3  $(NO_COL)]  $<\n"
+	@$(CC) $(C_FLAGS) $(OPT_FLAGS) -x c -c -o $@ $<
+	@printf "[$(GREEN)    GCC   $(NO_COL)]  $<\n"
+
 
 $(BUILD_DIR)/%.o: %.s
 	@$(ICONV) $(ICONV_FLAGS) $< | $(AS) $(AS_FLAGS) -o $@

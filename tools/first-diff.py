@@ -46,8 +46,8 @@ def firstDiffMain():
 
     buildFolder = Path("build")
 
-    BUILTROM = buildFolder / f"doraemon.z64"
-    BUILTMAP = buildFolder / f"doraemon.z64.map"
+    BUILTROM = buildFolder / f"doraemon2.z64"
+    BUILTMAP = buildFolder / f"doraemon2.z64.map"
 
     EXPECTEDROM = "expected" / BUILTROM
     EXPECTEDMAP = "expected" / BUILTMAP
