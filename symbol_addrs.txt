@@ -3,6 +3,11 @@
 // vi.s
 osTvType = 0x80000300;
 
+// boot.c
+
+bootproc = 0x80025C50;
+
+idle_thread = 0x8011A4E0;
 
 // 43F0.c
 
@@ -20,9 +25,26 @@ osGetCount = 0x800BE2B0;
 
 //
 
+// createthread.c
+
+osCreateThread = 0x800BE550;
+
+//
+
 // recvmesg.c
 
 osRecvMesg = 0x800BE6B0;
 
 //
 
+// startthread.c
+
+osStartThread = 0x800BEA40;
+
+//
+
+// initialize.c
+
+osInitialize = 0x800C85F0;
+
+//
