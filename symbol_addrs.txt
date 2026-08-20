@@ -25,6 +25,12 @@ osGetCount = 0x800BE2B0;
 
 //
 
+// createmesgqueue.c
+
+osCreateMesgQueue = 0x800BE520;
+
+//
+
 // createthread.c
 
 osCreateThread = 0x800BE550;
@@ -34,6 +40,12 @@ osCreateThread = 0x800BE550;
 // recvmesg.c
 
 osRecvMesg = 0x800BE6B0;
+
+//
+
+// setthreadpri.c
+
+osSetThreadPri = 0x800BE970;
 
 //
 

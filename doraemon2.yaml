@@ -65,7 +65,7 @@ segments:
     bss_size: 0x30610
     subsegments:
       - [0x1050, asm, boot]
-      - [0x10B0, asm]
+      - [0x10B0, c, idle]
       - [0x11B0, asm]
       - [0x1900, asm]
       - [0x2130, asm]
